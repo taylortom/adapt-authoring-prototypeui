@@ -5,98 +5,78 @@
     <meta http-equiv="cache-control" content="no-store, no-cache, must-revalidate" />
     <meta http-equiv="Pragma" content="no-store, no-cache" />
     <meta http-equiv="Expires" content="0" />
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/prototype.css">
   </head>
   <body>
     <div id="app">
       <a class="back" href="/prototype"><i class="fas fa-home"></i></a>
       <img class="logo" src="https://www.adaptlearning.org/wp-content/uploads/2015/11/home-hero-logo.png">
-      <h1>Users</h1>
-      <h2>Registered users</h2>
-      {{#if error}}
-        <p>Something went wrong loading the user list. See the error message below for more details.</p>
-        <div class="service-message">{{error}}</div>
-      {{else}}
-        {{#if users.length}}
-          <div class="users">
-            {{#each users}}
-            <div class="user" data-id="{{_id}}">
-              <div class="attribute" style="width:45%;">{{email}}</div>
-              <div class="attribute" style="width:25%;">{{firstName}}</div>
-              <div class="attribute" style="width:25%;">{{lastName}}</div>
-              <div class="attribute button" style="width:5%;">X</div>
-            </div>
-            {{/each}}
-          </div>
+      <div class="inner">
+        <h1>Users</h1>
+        <h2>Registered users</h2>
+        {{#if error}}
+          <p>Something went wrong loading the user list. See the error message below for more details.</p>
+          <div class="service-message">{{error}}</div>
         {{else}}
-          <div class="service-message">No users exist in the system.</div>
+          {{#if users.length}}
+            <div class="users">
+              {{#each users}}
+              <div class="user" data-id="{{_id}}">
+                <div class="attribute" style="width:45%;">{{email}}</div>
+                <div class="attribute" style="width:25%;">{{firstName}}</div>
+                <div class="attribute" style="width:25%;">{{lastName}}</div>
+                <div class="attribute button" style="width:5%;">X</div>
+              </div>
+              {{/each}}
+            </div>
+          {{else}}
+            <div class="service-message">No users exist in the system.</div>
+          {{/if}}
+
+          <a href="#" class="create">Create new user</a>
+
+          <div class="user new">
+            <div class="attribute hidden" style="width:5%;text-align:center;"></div>
+            <div class="attribute" style="width:40%;"><input type="text" name="email" placeholder="Email address"></div>
+            <div class="attribute" style="width:25%;"><input type="text" name="fname" placeholder="First name"></div>
+            <div class="attribute" style="width:25%;"><input type="text" name="sname" placeholder="Last name"></div>
+            <div class="attribute button" style="width:5%;"><i class="fas fa-save"></i></div>
+          </div>
         {{/if}}
 
-        <a href="#" class="create">Create new user</a>
-
-        <div class="user new">
-          <div class="attribute hidden" style="width:5%;text-align:center;"></div>
-          <div class="attribute" style="width:40%;"><input type="text" name="email" placeholder="Email address"></div>
-          <div class="attribute" style="width:25%;"><input type="text" name="fname" placeholder="First name"></div>
-          <div class="attribute" style="width:25%;"><input type="text" name="sname" placeholder="Last name"></div>
-          <div class="attribute button" style="width:5%;"><i class="fas fa-save"></i></div>
+        <p>The users module exposes the following endpoints:</p>
+        <div class="endpoint">
+          <span class="method">POST</span> <span class="route">api/users/</span>
+          <p>Creates a new user. Expects an object with an <span class="code">email</span>, <span class="code">firstName</span> and <span class="code">lastName</span>.</p>
         </div>
-      {{/if}}
-
-      <p>The users module exposes the following endpoints:</p>
-      <div class="endpoint">
-        <span class="method">POST</span> <span class="route">api/users/</span>
-        <p>Creates a new user. Expects an object with an <span class="code">email</span>, <span class="code">firstName</span> and <span class="code">lastName</span>.</p>
-      </div>
-      <div class="endpoint">
-        <span class="method">GET</span> <span class="route">api/users/:id?</span>
-        <p>If an ID is specified, returns a single user. If none is supplied, all users are fetched according to the query params.</p>
-      </div>
-      <div class="endpoint">
-        <span class="method">PUT</span> <span class="route">api/users/:id?</span>
-        <p>If an ID is specified, updates a single user. If none is supplied, all users are updated according to the query params.</p>
-      </div>
-      <div class="endpoint">
-        <span class="method">DELETE</span> <span class="route">api/users/:id</span>
-        <p>Deletes a single user.</p>
+        <div class="endpoint">
+          <span class="method">GET</span> <span class="route">api/users/:id?</span>
+          <p>If an ID is specified, returns a single user. If none is supplied, all users are fetched according to the query params.</p>
+        </div>
+        <div class="endpoint">
+          <span class="method">PUT</span> <span class="route">api/users/:id?</span>
+          <p>If an ID is specified, updates a single user. If none is supplied, all users are updated according to the query params.</p>
+        </div>
+        <div class="endpoint">
+          <span class="method">DELETE</span> <span class="route">api/users/:id</span>
+          <p>Deletes a single user.</p>
+        </div>
       </div>
     </div>
   </body>
   <style media="screen">
-    html {
-      background: url(https://www.adaptlearning.org/wp-content/uploads/2015/12/header_image.jpg?id=924);
-      background-attachment: fixed;
-    }
     #app {
-      margin: 0 auto;
-      margin-top: 3%;
-      margin-bottom: 5%;
-      width: 85%;
-      font-family: Raleway, "Helvetica Neue", Helvetica, Arial, sans-serif;
-      font-size: 20px;
-      font-weight: 300;
-      color: white;
+      width: 80%;
+    }
+    #app .inner {
+      text-align: left;
     }
     .service-message {
       padding: 25px;
       background: rgba(255,255,255,0.25);
       border: 1px solid rgba(255,255,255,0.25);
       border-radius: 3px;
-    }
-    .logo {
-      display: block;
-      margin: 0 auto;
-    }
-    a.back {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      background: rgba(255,255,255,0.25);
-      padding: 5px 10px;
-      border-radius: 3px;
-    }
-    a.back:hover {
-      text-decoration: none;
-      background: rgba(255,255,255,0.4);
     }
     @media all and (max-width:900px) {
       #app {
@@ -111,28 +91,10 @@
       }
     }
     h1 {
-      font-size: 250%;
-      font-weight: inherit;
       text-align: center;
-    }
-    h2 {
-      font-weight: lighter;
-      margin-left: 5px;
     }
     span.code {
       font-family: monospace;
-    }
-    a {
-      display: block;
-      margin: 0 auto;
-      padding: 5px 0;
-      color: white;
-      font-size: 110%;
-      text-decoration: none;
-      text-align: center;
-    }
-    a:hover {
-      text-decoration: underline;
     }
     .users {
       margin-bottom: 25px;
