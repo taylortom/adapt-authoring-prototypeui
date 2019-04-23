@@ -76,6 +76,7 @@
       background: rgba(255,255,255,0.25);
       border: 1px solid rgba(255,255,255,0.25);
       border-radius: 3px;
+      margin-bottom: 25px;
     }
     h1 {
       text-align: center;
@@ -184,7 +185,7 @@
       }
       $.ajax('/api/users/' + $btn.closest('.user').attr('data-id'), { method: 'DELETE' })
         .done(refresh)
-        .fail(function() { alert( "error" ); });
+        .fail(alertError);
     });
     $('a.create').click(function(e) {
       e.preventDefault();
@@ -200,11 +201,17 @@
         lastName: $('.user.new input[name="sname"]').val()
       })
         .done(refresh)
-        .fail(function() { alert( "error" ); });
+        .fail(alertError);
     });
 
     function refresh() {
       window.location = window.location;
+    }
+
+    function alertError(data) {
+      var code = data.responseJSON.statusCode;
+      var error = data.responseJSON.error;
+      alert(code + " error\n" + error);
     }
   </script>
 </html>
