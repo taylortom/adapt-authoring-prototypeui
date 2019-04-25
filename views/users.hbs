@@ -7,6 +7,9 @@
   </head>
   <body>
     <div id="app">
+      <div id="popup" class="hidden">
+        <input type="text" name="" value="">
+      </div>
       <a class="back" href="/prototype"><i class="fas fa-home"></i></a>
       <img class="logo" src="https://www.adaptlearning.org/wp-content/uploads/2015/11/home-hero-logo.png">
       <div class="inner">
@@ -20,9 +23,9 @@
             <div class="users">
               {{#each users}}
               <div class="user" data-id="{{_id}}">
-                <div class="attribute" style="width:45%;">{{email}}</div>
-                <div class="attribute" style="width:25%;">{{firstName}}</div>
-                <div class="attribute" style="width:25%;">{{lastName}}</div>
+                <div class="attribute email" style="width:45%;">{{email}}</div>
+                <div class="attribute firstName" style="width:25%;">{{firstName}}</div>
+                <div class="attribute lastName" style="width:25%;">{{lastName}}</div>
                 <div class="attribute button" style="width:5%;">X</div>
               </div>
               {{/each}}
@@ -71,6 +74,24 @@
     #app .inner {
       text-align: left;
     }
+    #popup {
+      position: fixed;
+      color: black;
+    }
+    #popup.hidden {
+      display: none;
+    }
+    #popup input {
+      width: 100%;
+      border: none;
+      background: #00dd95;
+      color: white;
+      outline: none;
+      padding: 5px;
+      font-size: 20px;
+      font-weight: inherit;
+      font-family: inherit;
+    }
     .service-message {
       padding: 25px;
       background: rgba(255,255,255,0.25);
@@ -100,6 +121,10 @@
       border: 0.5px solid rgba(255,255,255,0.25);
       background: rgba(255,255,255,0.25);
       text-align: left;
+    }
+    .attribute:hover {
+      background: rgba(255,255,255,0.35);
+      cursor: text;
     }
     .attribute.button {
       background: none;
@@ -187,6 +212,35 @@
         .done(refresh)
         .fail(alertError);
     });
+    $('.user .attribute').click(function(e) {
+      var $cell = $(e.currentTarget);
+      var $user = $cell.closest('.user');
+
+      if($user.hasClass('new')) return;
+
+      var $popup = $('#popup');
+      var initialVal = $cell.text();
+
+      $popup.removeClass('hidden').css({
+        top: $cell.offset().top,
+        left: $cell.offset().left,
+        width: $cell.width() + 'px'
+      });
+      $('input', $popup).val(initialVal).focus().on('blur', function() {
+        $(this).off('blur');
+        $popup.addClass('hidden');
+        if($(this).val() === initialVal) {
+          return;
+        }
+        var val = $(this).val();
+        var data = ['email','firstName','lastName'].reduce(function(d,a) {
+          d[a] = $cell.hasClass(a) ? val : $('.attribute.' + a, $user).text();
+          return d;
+        }, {});
+        $.ajax('/api/users/' + $user.attr('data-id'), { method: 'PUT', data: data })
+          .done(refresh).fail(alertError);;
+      });
+    });
     $('a.create').click(function(e) {
       e.preventDefault();
       $('.user.new').css('display','flex');
@@ -199,9 +253,7 @@
         email: $('.user.new input[name="email"]').val(),
         firstName: $('.user.new input[name="fname"]').val(),
         lastName: $('.user.new input[name="sname"]').val()
-      })
-        .done(refresh)
-        .fail(alertError);
+      }).done(refresh).fail(alertError);
     });
 
     function refresh() {
