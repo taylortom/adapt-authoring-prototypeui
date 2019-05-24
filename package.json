@@ -2,6 +2,7 @@
   "name": "adapt-authoring-prototypeui",
   "version": "0.0.1",
   "description": "Bundle of UIs to test the prototype",
+  "homepage": "https://github.com/taylortom/adapt-authoring-prototypeui",
   "main": "index.js",
   "dependencies": {
     "adapt-authoring-core": "git+https://github.com/taylortom/adapt-authoring-core.git"
