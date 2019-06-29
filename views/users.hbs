@@ -50,7 +50,7 @@
         <p>The users module exposes the following endpoints:</p>
         <div class="endpoint">
           <span class="method">POST</span> <span class="route">api/users/</span>
-          <p>Creates a new user. Expects an object with an <span class="code">email</span>, <span class="code">firstName</span> and <span class="code">lastName</span>.</p>
+          <p>Creates a new user. Expects an object with user data. See <a href="https://github.com/taylortom/adapt-authoring-users/blob/master/schema/user.schema.js" target="_blank">the schema</a> for more info.</p>
         </div>
         <div class="endpoint">
           <span class="method">GET</span> <span class="route">api/users/:id?</span>
@@ -197,6 +197,14 @@
     .endpoint p {
       margin: 0;
       margin-top: 7px;
+    }
+    .endpoint a {
+      background: none;
+      display: inline;
+      margin: 0;
+      padding: 0;
+      font-weight: bold;
+      border: none;
     }
   </style>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
