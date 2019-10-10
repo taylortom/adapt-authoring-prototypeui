@@ -4,9 +4,6 @@
   "description": "Bundle of UIs to test the prototype",
   "homepage": "https://github.com/taylortom/adapt-authoring-prototypeui",
   "main": "index.js",
-  "dependencies": {
-    "adapt-authoring-core": "git+https://github.com/taylortom/adapt-authoring-core.git"
-  },
   "adapt_authoring": {
     "module": true,
     "documentation": {
@@ -16,5 +13,8 @@
         "docs": "docs/*"
       }
     }
+  },
+  "peerDependencies": {
+    "adapt-authoring-core": "git+https://github.com/taylortom/adapt-authoring-core.git"
   }
 }
